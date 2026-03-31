@@ -22,7 +22,10 @@ content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-s
 
 <nav id="nav">
   <a href="#hero" class="nav-logo">☽ TMC ☾</a>
-  <ul class="nav-links">
+  <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav-links">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="main-nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#process">The Ritual</a></li>

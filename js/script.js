@@ -21,63 +21,71 @@ const CONFIG = {
   PARTICLE_LIFETIME: 1500,
   SCROLL_THRESHOLD: 60,
   REVEAL_THRESHOLD: 0.12,
+  MOBILE_BREAKPOINT: 900,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches || 'ontouchstart' in window;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedEffects = isTouchDevice || prefersReducedMotion;
+
   // ===== CURSOR ANIMATION =====
-  const cursorEl = document.querySelector('.cursor');
-  if (!cursorEl) {
-    console.warn('Cursor element not found. Cursor animation disabled.');
-    return;
-  }
+  if (!reducedEffects) {
+    const cursorEl = document.querySelector('.cursor');
+    if (cursorEl) {
+      const dot = cursorEl.querySelector('.cursor-dot');
+      const ring = cursorEl.querySelector('.cursor-ring');
 
-  const dot = cursorEl.querySelector('.cursor-dot');
-  const ring = cursorEl.querySelector('.cursor-ring');
-  
-  if (!dot || !ring) {
-    console.warn('Cursor dot or ring not found. Cursor animation disabled.');
-    return;
-  }
+      if (dot && ring) {
+        document.body.classList.add('custom-cursor-enabled');
 
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-  });
-  
-  (function animCursor() {
-    rx += (mx - rx) * CONFIG.CURSOR_MULTIPLIER;
-    ry += (my - ry) * CONFIG.CURSOR_MULTIPLIER;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animCursor);
-  })();
-  // Cursor hover effects on interactive elements
-  const interactiveElements = document.querySelectorAll('a, button, .service-card');
-  if (interactiveElements.length > 0) {
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.transform = `translate(-50%,-50%) scale(${CONFIG.CURSOR_SCALE_HOVER})`;
-        ring.style.borderColor = CONFIG.CURSOR_BORDER_COLOR_HOVER;
-      });
-      el.addEventListener('mouseleave', () => {
-        ring.style.transform = `translate(-50%,-50%) scale(${CONFIG.CURSOR_SCALE_NORMAL})`;
-        ring.style.borderColor = CONFIG.CURSOR_BORDER_COLOR_NORMAL;
-      });
-    });
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => {
+          mx = e.clientX;
+          my = e.clientY;
+          dot.style.left = mx + 'px';
+          dot.style.top = my + 'px';
+        });
+
+        (function animCursor() {
+          rx += (mx - rx) * CONFIG.CURSOR_MULTIPLIER;
+          ry += (my - ry) * CONFIG.CURSOR_MULTIPLIER;
+          ring.style.left = rx + 'px';
+          ring.style.top = ry + 'px';
+          requestAnimationFrame(animCursor);
+        })();
+
+        const interactiveElements = document.querySelectorAll('a, button, .service-card');
+        interactiveElements.forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            ring.style.transform = `translate(-50%,-50%) scale(${CONFIG.CURSOR_SCALE_HOVER})`;
+            ring.style.borderColor = CONFIG.CURSOR_BORDER_COLOR_HOVER;
+          });
+          el.addEventListener('mouseleave', () => {
+            ring.style.transform = `translate(-50%,-50%) scale(${CONFIG.CURSOR_SCALE_NORMAL})`;
+            ring.style.borderColor = CONFIG.CURSOR_BORDER_COLOR_NORMAL;
+          });
+        });
+      } else {
+        console.warn('Cursor dot or ring not found. Cursor animation disabled.');
+      }
+    }
   }
 
   // ===== CLICK PARTICLES =====
-  document.addEventListener('click', e => {
-    for (let i = 0; i < CONFIG.PARTICLE_COUNT; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const angle = (i / CONFIG.PARTICLE_COUNT) * Math.PI * 2;
-      const dist = CONFIG.PARTICLE_MIN_DISTANCE + Math.random() * (CONFIG.PARTICLE_MAX_DISTANCE - CONFIG.PARTICLE_MIN_DISTANCE);
-      p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;`;
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), CONFIG.PARTICLE_LIFETIME);
-    }
-  });
+  if (!reducedEffects) {
+    document.addEventListener('click', e => {
+      for (let i = 0; i < CONFIG.PARTICLE_COUNT; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const angle = (i / CONFIG.PARTICLE_COUNT) * Math.PI * 2;
+        const dist = CONFIG.PARTICLE_MIN_DISTANCE + Math.random() * (CONFIG.PARTICLE_MAX_DISTANCE - CONFIG.PARTICLE_MIN_DISTANCE);
+        p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px;`;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), CONFIG.PARTICLE_LIFETIME);
+      }
+    });
+  }
 
   // ===== STARS BACKGROUND =====
   const canvas = document.getElementById('stars');
@@ -92,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
       function initStars() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        stars = Array.from({ length: CONFIG.STAR_COUNT }, () => ({
+        const starCount = reducedEffects ? Math.floor(CONFIG.STAR_COUNT * 0.45) : CONFIG.STAR_COUNT;
+        stars = Array.from({ length: starCount }, () => ({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           r: Math.random() * (CONFIG.STAR_MAX_RADIUS - CONFIG.STAR_MIN_RADIUS) + CONFIG.STAR_MIN_RADIUS,
@@ -124,6 +133,30 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > CONFIG.SCROLL_THRESHOLD);
     });
+
+    const navToggle = nav.querySelector('.nav-toggle');
+    const navLinks = nav.querySelector('.nav-links');
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('nav-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > CONFIG.MOBILE_BREAKPOINT) {
+          nav.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
   } else {
     console.warn('Navigation element not found.');
   }
@@ -131,15 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== SCROLL REVEAL ANIMATIONS =====
   const revealElements = document.querySelectorAll('.reveal');
   if (revealElements.length > 0) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-        }
-      });
-    }, { threshold: CONFIG.REVEAL_THRESHOLD });
-    
-    revealElements.forEach(el => observer.observe(el));
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      revealElements.forEach(el => el.classList.add('visible'));
+    } else {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      }, { threshold: CONFIG.REVEAL_THRESHOLD });
+
+      revealElements.forEach(el => observer.observe(el));
+    }
   } else {
     console.warn('No elements with .reveal class found.');
   }
