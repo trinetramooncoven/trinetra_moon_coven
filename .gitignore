@@ -1,0 +1,17 @@
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Build outputs (if you add build tools later)
+node_modules/
+dist/
+_site/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

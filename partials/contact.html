@@ -1,0 +1,73 @@
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-header">
+      <span class="section-label reveal">Open the Channel</span>
+      <h2 class="section-heading reveal reveal-delay-1">Request a Consultation</h2>
+      <div class="section-rule reveal reveal-delay-1"></div>
+      <p class="reveal reveal-delay-2" style="color:var(--text-dim);font-size:1.05rem;line-height:1.8;">
+        The first step is yours to take. Share what you carry, and we will begin.
+      </p>
+    </div>
+
+    <!-- ✅ FIXED FORM -->
+    <form action="https://formspree.io/f/mqegbdqe" method="POST" class="contact-form">
+      <!-- spam protection -->
+      <input type="text" name="_gotcha" style="display:none">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name"
+            placeholder="As you wish to be called"
+            pattern="^[A-Za-z ]+$"
+            title="Only letters and spaces allowed"
+            required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email"
+            placeholder="your@email.com"
+            required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone"
+            placeholder="10 digit number"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            title="Enter exactly 10 digits" />
+        </div>
+
+        <div class="form-group">
+          <label for="service">Service Sought</label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Choose your path</option>
+            <option>The Full Spread</option>
+            <option>Moon Oracle</option>
+            <option>Soul Channeling</option>
+            <option>Shadow Work Session</option>
+            <option>Past Life Reading</option>
+            <option>Love & Relationship Oracle</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="question">Your Question or Intention</label>
+        <textarea id="question" name="message"
+          placeholder="What does your soul seek to understand?"
+          required></textarea>
+      </div>
+
+      <button type="submit" class="btn-ritual">
+        <span>✦ &nbsp; Send My Intention &nbsp; ✦</span>
+      </button>
+
+    </form>
+  </div>
+</section>
