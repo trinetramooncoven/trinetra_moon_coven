@@ -64,8 +64,8 @@ module.exports = function(eleventyConfig) {
 
 Then use Nunjucks/Liquid templates to include partials:
 ```html
-{% include "partials/nav.html" %}
-{% include "partials/hero.html" %}
+{% raw %}{% include nav.html %}{% endraw %}
+{% raw %}{% include hero.html %}{% endraw %}
 ```
 
 ### Option 4: JavaScript Template Literals
