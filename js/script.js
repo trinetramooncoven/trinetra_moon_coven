@@ -24,7 +24,14 @@ const CONFIG = {
   MOBILE_BREAKPOINT: 900,
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+let hasInitialized = false;
+
+function initializeSite() {
+  if (hasInitialized) {
+    return;
+  }
+  hasInitialized = true;
+
   const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches || 'ontouchstart' in window;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const reducedEffects = isTouchDevice || prefersReducedMotion;
@@ -182,4 +189,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-});
+}
+
+function bootstrapSite() {
+  const start = () => {
+    initializeSite();
+  };
+
+  if (window.tmcPartialsReady && typeof window.tmcPartialsReady.then === 'function') {
+    window.tmcPartialsReady.then(start).catch(start);
+    return;
+  }
+
+  start();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrapSite);
+} else {
+  bootstrapSite();
+}
