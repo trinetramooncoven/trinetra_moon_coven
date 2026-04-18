@@ -192,15 +192,48 @@
     /* SERVICES */
     #services { padding: 120px 60px; background: var(--black); text-align: center; position: relative; z-index: 1; }
     .services-header { max-width: 600px; margin: 0 auto 80px; }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; max-width: 1200px; margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; max-width: 1220px; margin: 0 auto; }
     .service-card {
-      background: var(--void); padding: 52px 40px; position: relative; overflow: hidden;
-      transition: transform 0.4s ease, background 0.4s ease; text-align: left;
-      border: 1px solid rgba(201,168,76,0.08);
+      background: linear-gradient(155deg, rgba(32,18,50,0.5), rgba(11,8,18,0.72));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 50px 38px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+      text-align: left;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 22px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.28);
     }
-    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.4s; }
-    .service-card:hover { transform: translateY(-6px); background: rgba(16,10,26,0.9); }
-    .service-card:hover::before { opacity: 1; }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(201,168,76,0.08), transparent 38%, rgba(184,180,200,0.06));
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: -35%;
+      left: -60%;
+      width: 85%;
+      height: 160%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.09), transparent);
+      transform: rotate(15deg);
+      transition: left 0.5s ease;
+      pointer-events: none;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(201,168,76,0.38);
+      box-shadow: 0 26px 58px rgba(0,0,0,0.34), 0 0 32px rgba(201,168,76,0.14);
+      background: linear-gradient(155deg, rgba(37,21,58,0.58), rgba(13,9,22,0.8));
+    }
+    .service-card:hover::after { left: 120%; }
     .service-icon { font-size: 2.2rem; margin-bottom: 24px; display: block; filter: drop-shadow(0 0 8px rgba(201,168,76,0.3)); }
     .service-name { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--gold-light); margin-bottom: 12px; letter-spacing: 0.05em; }
     .service-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.8; font-weight: 300; }
@@ -219,7 +252,23 @@
     /* TESTIMONIALS */
     #testimonials { padding: 120px 60px; background: linear-gradient(180deg, var(--black) 0%, var(--purple-deep) 50%, var(--black) 100%); text-align: center; position: relative; z-index: 1; }
     .testimonials-track { display: flex; gap: 32px; max-width: 1200px; margin: 0 auto; }
-    .testimonial-card { flex: 1; background: rgba(10,6,18,0.8); border: 1px solid rgba(201,168,76,0.12); padding: 48px 40px; position: relative; }
+    .testimonial-card {
+      flex: 1;
+      background: linear-gradient(150deg, rgba(33,20,51,0.5), rgba(12,8,20,0.76));
+      border: 1px solid rgba(201,168,76,0.22);
+      padding: 48px 40px;
+      position: relative;
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 22px 48px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,168,76,0.36);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.35), 0 0 28px rgba(201,168,76,0.12);
+    }
     .testimonial-card::before { content: '\201C'; font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: var(--gold-dim); position: absolute; top: 16px; left: 28px; line-height: 1; opacity: 0.4; }
     .testimonial-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; line-height: 1.85; color: var(--silver); margin-bottom: 28px; }
     .testimonial-author { font-family: 'Cinzel Decorative', serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; }
