@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Reading Rates | Trinetri Moon Coven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #050308;
+      --void: #100a1a;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: #7a6030;
+      --silver: #b8b4c8;
+      --mist: #d4d0e8;
+      --text: #e8e4f0;
+      --text-dim: #9890b0;
+      --purple-mid: #2d1155;
+      --crimson: #6b1a2e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--black);
+      color: var(--text);
+      font-family: 'EB Garamond', serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(107,26,46,0.24), transparent 45%),
+        radial-gradient(circle at 84% 8%, rgba(45,17,85,0.34), transparent 48%),
+        linear-gradient(180deg, var(--black) 0%, var(--void) 55%, var(--black) 100%);
+      display: grid;
+      place-items: center;
+      padding: 26px;
+      overflow-x: hidden;
+    }
+
+    .sheet {
+      width: min(980px, 100%);
+      position: relative;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 24px;
+      background: linear-gradient(160deg, rgba(35,19,55,0.68), rgba(10,6,18,0.92));
+      box-shadow: 0 26px 62px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .sheet::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(201,168,76,0.14), transparent 36%, rgba(184,180,200,0.08));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sheet::after {
+      content: '';
+      position: absolute;
+      top: -42%;
+      left: -68%;
+      width: 60%;
+      height: 170%;
+      background: linear-gradient(110deg, transparent, rgba(255,255,255,0.11), transparent);
+      transform: rotate(16deg);
+      animation: shimmer 7.2s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .aura {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      top: -120px;
+      right: -110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.04) 42%, transparent 72%);
+      animation: orb 8s ease-in-out infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+      padding: clamp(20px, 2.6vw, 32px);
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding-bottom: 16px;
+      margin-bottom: 12px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--gold-dim);
+      font-size: 0.74rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--gold-light);
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+      line-height: 1.35;
+      letter-spacing: 0.045em;
+    }
+
+    .sub {
+      margin: 10px auto 0;
+      max-width: 720px;
+      color: var(--silver);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: rates;
+    }
+
+    .item {
+      padding: 14px 2px 15px;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      animation: rise 0.7s ease both;
+    }
+
+    .item:nth-child(1) { animation-delay: 0.06s; }
+    .item:nth-child(2) { animation-delay: 0.12s; }
+    .item:nth-child(3) { animation-delay: 0.18s; }
+    .item:nth-child(4) { animation-delay: 0.24s; }
+    .item:nth-child(5) { animation-delay: 0.30s; }
+    .item:nth-child(6) { animation-delay: 0.36s; }
+    .item:nth-child(7) { animation-delay: 0.42s; }
+    .item:nth-child(8) { animation-delay: 0.48s; }
+    .item:nth-child(9) { animation-delay: 0.54s; }
+    .item:nth-child(10) { animation-delay: 0.60s; }
+    .item:nth-child(11) { animation-delay: 0.66s; }
+
+    .item:last-child { border-bottom: 0; }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 0.93rem;
+      color: var(--mist);
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 700;
+      line-height: 1.45;
+      letter-spacing: 0.025em;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    .desc {
+      margin: 0 0 4px;
+      color: var(--silver);
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
+    .best {
+      margin: 0;
+      color: var(--text-dim);
+      line-height: 1.5;
+      font-size: 0.89rem;
+    }
+
+    .note {
+      margin: 7px 0 0;
+      color: var(--gold-light);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer {
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(201,168,76,0.16);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--gold-dim);
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 0.72rem;
+    }
+
+    @keyframes shimmer {
+      0% { left: -68%; }
+      100% { left: 135%; }
+    }
+
+    @keyframes orb {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.48; }
+      50% { transform: translateY(16px) scale(1.11); opacity: 0.75; }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 14px; }
+      .sheet { border-radius: 16px; }
+      .inner { padding: 16px 14px; }
+      .item { padding: 12px 0; }
+      .sub { font-size: 0.94rem; }
+      .desc { font-size: 0.92rem; }
+      .best { font-size: 0.85rem; }
+      .meta { white-space: normal; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 10mm; }
+      html, body { background: #fff !important; color: #000; }
+      body { display: block; padding: 0; }
+      .sheet {
+        width: 100%;
+        border: 1px solid #8f7a48;
+        box-shadow: none;
+        background: #fff;
+      }
+      .sheet::before,
+      .sheet::after,
+      .aura { display: none; }
+      .kicker, .footer { color: #7a6030; }
+      h1, h2, .meta, .note { color: #5f4d2f; }
+      .sub, .desc, .best { color: #2b2b2b; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet" aria-labelledby="core-title">
+    <div class="aura" aria-hidden="true"></div>
+    <section class="inner">
+      <header class="header">
+        <p class="kicker">Core Services</p>
+        <h1 id="core-title">Tarot & Oracle Reading Rates</h1>
+        <p class="sub">Focused one-session readings for clarity, guidance, healing, and emotional alignment.</p>
+      </header>
+
+      <ol class="list" aria-label="Core tarot and oracle readings">
+        <li class="item">
+          <div class="row">
+            <h2>1. Clarity Reading</h2>
+            <p class="meta">Past • Present • Future · 30 mins · ₹2000</p>
+          </div>
+          <p class="desc">A focused 3-card spread mapping where you have been, where you stand, and where you are headed.</p>
+          <p class="best">Best for: Quick clarity, decisions, immediate direction</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>2. Balanced Guidance Reading</h2>
+            <p class="meta">Five-Point Star Spread · 30 mins · ₹3000</p>
+          </div>
+          <p class="desc">A 5-card spread covering emotions, challenges, external influences, guidance, and outcome.</p>
+          <p class="best">Best for: Feeling stuck, needing grounded multi-angle insight</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>3. Deep Insight Reading</h2>
+            <p class="meta">Super 7 Spread · 40 mins · ₹4000</p>
+          </div>
+          <p class="desc">A layered 7-card analysis that breaks down your situation step-by-step.</p>
+          <p class="best">Best for: Complex situations, transitions, repeated confusion</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>4. Emotional Reset Reading</h2>
+            <p class="meta">Harmony Spread · 30 mins · ₹3000</p>
+          </div>
+          <p class="desc">Focused on restoring inner balance, emotional clarity, and energetic alignment.</p>
+          <p class="best">Best for: Stress, overwhelm, emotional imbalance</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>5. Life Overview Reading</h2>
+            <p class="meta">Horoscope Wheel (12 Houses) · 60 mins · ₹6000</p>
+          </div>
+          <p class="desc">A full-spectrum reading covering love, career, finances, growth, and direction.</p>
+          <p class="best">Best for: Birthdays, new year cycles, major life planning</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>6. Mind • Body • Soul Alignment</h2>
+            <p class="meta">World Tree Spread · 45 mins · ₹4500</p>
+          </div>
+          <p class="desc">A spiritual deep dive connecting physical reality, mental patterns, and soul purpose.</p>
+          <p class="best">Best for: Personal evolution, spiritual growth, alignment work</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>7. Cycle & Progression Reading</h2>
+            <p class="meta">Spiral Spread · 40 mins · ₹4000</p>
+          </div>
+          <p class="desc">Tracks how your situation is evolving over time and where it is leading.</p>
+          <p class="best">Best for: Ongoing situations, repeated patterns, long-term clarity</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>8. Shadow Reveal Reading</h2>
+            <p class="meta">From Shadows Spread · 60 mins · ₹4500</p>
+          </div>
+          <p class="desc">Uncovers hidden fears, subconscious blocks, and unseen influences shaping your life.</p>
+          <p class="best">Best for: Inner healing, shadow work, truth-seeking</p>
+          <p class="note">Reveals what you avoid and why it matters.</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>9. Quick Guidance Reading</h2>
+            <p class="meta">Moon Oracle Reading · 30 mins · ₹2000</p>
+          </div>
+          <p class="desc">A direct intuitive oracle message focused on current energy and immediate guidance.</p>
+          <p class="best">Best for: Quick answers, daily clarity, intuitive check-ins</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>10. Deep Healing Session</h2>
+            <p class="meta">Shadow Work Session · 90 mins · ₹7777</p>
+          </div>
+          <p class="desc">An intensive session exploring deep-rooted emotional patterns and subconscious blocks.</p>
+          <p class="best">Best for: Healing, breaking cycles, deep self-work</p>
+          <p class="note">What is revealed can be healed.</p>
+        </li>
+
+        <li class="item">
+          <div class="row">
+            <h2>11. Love Clarity Reading</h2>
+            <p class="meta">Love & Relationship Reading · 30-40 mins · ₹3500</p>
+          </div>
+          <p class="desc">Explores relationship dynamics, partner energy, emotional patterns, and future direction.</p>
+          <p class="best">Best for: Situationships, breakups, confusion in love, future connections</p>
+        </li>
+      </ol>
+
+      <div class="footer">
+        <span>Trinetri Moon Coven</span>
+        <span>Core Rates Sheet</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
