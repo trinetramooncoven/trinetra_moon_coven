@@ -35,7 +35,7 @@ window.tmcPartialsReady = loadPartialsIntoRoot().catch(error => {
 
   const root = document.getElementById('partials-root');
   if (root) {
-    root.innerHTML = '<section style="padding:120px 24px;text-align:center;position:relative;z-index:1;"><h2 style="font-family:serif;margin-bottom:12px;">Unable to load page content</h2><p>Please refresh the page or check your hosting path configuration.</p></section>';
+    root.innerHTML = '<section class="partials-load-error"><h2 class="partials-load-error-title">Unable to load page content</h2><p>Please refresh the page or check your hosting path configuration.</p></section>';
   }
 
   throw error;

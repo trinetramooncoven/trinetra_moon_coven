@@ -5,7 +5,7 @@
       <span class="section-label reveal">Open the Channel</span>
       <h2 class="section-heading reveal reveal-delay-1">Request a Consultation</h2>
       <div class="section-rule reveal reveal-delay-1"></div>
-      <p class="reveal reveal-delay-2" style="color:var(--text-dim);font-size:1.05rem;line-height:1.8;">
+      <p class="reveal reveal-delay-2 section-intro">
         The first step is yours to take. Share what you carry, and we will begin.
       </p>
     </div>
@@ -13,7 +13,8 @@
     <!-- ✅ FIXED FORM -->
     <form action="https://formspree.io/f/mqegbdqe" method="POST" class="contact-form">
       <!-- spam protection -->
-      <input type="text" name="_gotcha" style="display:none">
+      <input type="text" name="_gotcha" class="field-honeypot">
+      <input type="hidden" name="_next" value="">
 
       <div class="form-row">
         <div class="form-group">
@@ -69,5 +70,16 @@
       </button>
 
     </form>
+
+    <div id="form-success-modal" class="form-success-modal" role="dialog" aria-modal="true" aria-labelledby="form-success-title" hidden>
+      <div class="form-success-dialog">
+        <p class="form-success-kicker">Transmission Received</p>
+        <h3 id="form-success-title">Your intention has been sent.</h3>
+        <p class="form-success-text">Thank you for reaching out. Your message is with us, and you will hear back soon.</p>
+        <button type="button" class="btn-ritual form-success-ok" data-modal-close>
+          <span>✦ &nbsp; Okay &nbsp; ✦</span>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
