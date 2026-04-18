@@ -188,6 +188,56 @@ function initializeSite() {
     console.warn('No elements with .reveal class found.');
   }
 
+  // ===== FORMSPREE SUCCESS MODAL =====
+  const contactForm = document.querySelector('#contact .contact-form[action*="formspree.io"]');
+  const successModal = document.getElementById('form-success-modal');
+
+  if (contactForm) {
+    let nextField = contactForm.querySelector('input[name="_next"]');
+
+    if (!nextField) {
+      nextField = document.createElement('input');
+      nextField.type = 'hidden';
+      nextField.name = '_next';
+      contactForm.appendChild(nextField);
+    }
+
+    nextField.value = `${window.location.origin}${window.location.pathname}?submitted=1`;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('submitted') === '1') {
+    if (successModal) {
+      const closeButton = successModal.querySelector('[data-modal-close]');
+      const closeModal = () => {
+        successModal.setAttribute('hidden', '');
+        document.body.classList.remove('modal-open');
+      };
+
+      successModal.removeAttribute('hidden');
+      document.body.classList.add('modal-open');
+
+      if (closeButton) {
+        closeButton.addEventListener('click', closeModal);
+      }
+
+      successModal.addEventListener('click', event => {
+        if (event.target === successModal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+    }
+
+    const nextUrl = `${window.location.pathname}${window.location.hash}`;
+    window.history.replaceState({}, document.title, nextUrl);
+  }
+
 
 }
 

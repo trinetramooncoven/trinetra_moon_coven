@@ -16,3 +16,4 @@ _site/
 *.sublime-project
 *.sublime-workspace
 .nojekyll
+index.static.html
